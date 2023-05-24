@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span th:insert="~{student/studentBase::studLinks}"></span>
+	<style>
+		.navcol,
+		footer {
+			/* background-color: #B204FF; */
+			background-color: #2e7272;
+		}
+
+		.button:hover {
+			background-color: #2e7272;
+			color: white;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.logo {
+			width: 40px;
+			height: 40px;
+			border-radius: 35px;
+		}
+
+		.height {
+			height: 87.6vh;
+		}
+
+		.buttons {
+			background-color: #2e7272;
+		}
+		
+		@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
+
+		/* Design */
+		*,
+		*::before,
+		*::after {
+			box-sizing: border-box;
+		}
+
+		html {
+			background-color: #ecf9ff;
+		}
+
+		body {
+			color: #272727;
+			font-family: 'Quicksand', serif;
+			font-style: normal;
+			font-weight: 400;
+			letter-spacing: 0;
+
+		}
+
+		.main {
+			max-width: 1200px;
+			margin: 0 auto;
+		}
+
+		img {
+			height: auto;
+			max-width: 100%;
+			vertical-align: middle;
+		}
+
+		.btns {
+			color: #ffffff;
+			padding: 0.8rem;
+			font-size: 14px;
+			text-transform: uppercase;
+			border-radius: 4px;
+			font-weight: 400;
+			display: block;
+			width: 100%;
+			cursor: pointer;
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			background: transparent;
+		}
+
+		.btns:hover {
+			background-color: rgba(255, 255, 255, 0.12);
+		}
+
+		.cards {
+			display: flex;
+			flex-wrap: wrap;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		.cards_item {
+			display: flex;
+			padding: 1rem;
+		}
+
+		@media (min-width: 40rem) {
+			.cards_item {
+				width: 50%;
+			}
+		}
+
+		@media (min-width: 56rem) {
+			.cards_item {
+				width: 33.3333%;
+			}
+		}
+
+		.card {
+			background-color: white;
+			border-radius: 0.25rem;
+			box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+		}
+
+		.card_content {
+			padding: 1rem;
+			background: linear-gradient(to bottom left, #2e7272 40%, #FFC39E 100%);
+		}
+
+		.card_title {
+			color: #ffffff;
+			font-size: 1.1rem;
+			font-weight: 700;
+			letter-spacing: 1px;
+			text-transform: capitalize;
+			margin: 0px;
+		}
+
+		.card_text {
+			color: #ffffff;
+			font-size: 0.875rem;
+			line-height: 1.5;
+			margin-bottom: 1.25rem;
+			font-weight: 400;
+		}
+	</style>
+</head>
+
+<body>
+	<nav th:replace="~{student/studentBase::navs}"></nav>
+	<div class="row px-4 mt-2">
+		<div class="col"><span class="fs-3 ">Your Dashboard</span></div>
+		<div class="col">
+			<div class="d-flex justify-content-end fs-5 mt-2 mx-1">
+				<a href="/logout" class="btn button btn-outline-success">Logout</a>
+			</div>
+		</div>
+	</div>
+	<div class="main">
+		<ul class="cards">
+			<li class="cards_item">
+				<div class="card">
+					<div class="card_image"><img src="/img/searchBook.jpg"></div>
+					<div class="card_content">
+						<h2 class="card_title">Books :-</h2>
+						<p class="card_text ">Tap on View Books button to inspect the books present in library</p>
+						<a href="/student/viewBooks/0" class="btns text-center card_btn">View Books</a>
+					</div>
+				</div>
+			</li>
+			<li class="cards_item">
+				<div class="card">
+					<div class="card_image"><img src="/img/studentIssuedBooks.jpg"></div>
+					<div class="card_content">
+						<h2 class="card_title">Returned Books :-</h2>
+						<p class="card_text">Tap on View Books button to inspect the books you have returned to library
+						</p>
+						<a href="/student/returnedBooks/0" class="btns text-center card_btn">View Books</a>
+					</div>
+				</div>
+			</li>
+			<li class="cards_item">
+				<div class="card">
+					<div class="card_image"><img src="/img/return.jpg"></div>
+					<div class="card_content">
+						<h2 class="card_title">Issued Books :-</h2>
+						<p class="card_text">Tap on View Books button to inspect the books you have taken from library
+						</p>
+						<a href="/student/issuedBooks/0" class="btns text-center card_btn">View Books</a>
+					</div>
+				</div>
+			</li>
+			<li class="cards_item">
+				<div class="card">
+					<div class="card_image"><img src="/img/viewStudentDetails.jpg"></div>
+					<div class="card_content">
+						<h2 class="card_title">Your Information :-</h2>
+						<p class="card_text">Tap on View Details button to inspect your details..</p>
+						<a href="/student/viewStudentDetails" class="btns text-center card_btn">View Details</a>
+					</div>
+				</div>
+			</li>
+			<!--<li class="cards_item">
+				<div class="card">
+					<div class="card_image"><img src="https://picsum.photos/500/300/?image=14"></div>
+					<div class="card_content">
+						<h2 class="card_title">Card Grid Layout</h2>
+						<p class="card_text">Demo of pixel perfect pure CSS simple responsive card grid layout</p>
+						<button class="btn card_btn">Read More</button>
+					</div>
+				</div>
+			</li>-->
+		</ul>
+	</div>
+	<footer th:replace="~{student/studentBase::footers}"></footer>
+</body>
+
+</html>

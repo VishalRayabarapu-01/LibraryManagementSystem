@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span th:insert="~{/admin/adminBase::adminLinks}"></span>
+	<style>
+		.navcol,
+		footer {
+			/* background-color: #B204FF; */
+			background-color: #2e7272;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.logo {
+			width: 40px;
+			height: 40px;
+			border-radius: 35px;
+		}
+
+		
+		.button:hover {
+			background-color: #2e7272;
+			color: white;
+		}
+		.vv {
+			height: 86.6vh;
+		}
+
+		.no-data-found-img {
+			width: 35em;
+			height: 410px;
+		}
+
+		@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
+
+		body {
+			color: #272727;
+			font-family: 'Quicksand', serif;
+			font-style: normal;
+			font-weight: 400;
+			letter-spacing: 0;
+
+		}
+	</style>
+</head>
+
+<body>
+	<nav th:replace="~{student/studentBase::navs}"></nav>
+	<div class="d-flex justify-content-end fs-5 mt-2 mx-3">
+		<a href="/student/index" class="btn button  btn-outline-success">Back</a>
+	</div>
+	<div class="card mt-2">
+		<div class="card-header p-2 m-1">
+			<div class="row">
+				<div class="col-9">
+					<th:block th:if="${noPagination}=='false'">
+						<nav aria-label="Page navigation ">
+							<ul class="pagination m-0">
+								<li class="page-item" th:each="n : ${#numbers.sequence(1,totalPages)}">
+									<a class="page-link" th:href="@{'/student/viewBooks/'+${n-1}}" th:text="${n}"></a>
+								</li>
+							</ul>
+						</nav>
+					</th:block>
+				</div>
+				<div class="col">
+					<th:block th:if="${noDataFound} == 'false'">
+						<form action="/student/search" method="post">
+							<div class="d-flex justify-content-end  text-danger mt-1">
+								<input class="form-control me-2" type="search" name="bookid" placeholder="Search">
+								<button class="btn btn-sm btn-success" type="submit">Search</button>
+							</div>
+						</form>
+					</th:block>
+				</div>
+
+			</div>
+		</div>
+		<th:block th:if="${messageError}">
+			<script>
+				var msg = '[[${messageError}]]';
+				swal("Error", msg, "error");
+			</script>
+		</th:block>
+		<div class="card-body p-0 px-1">
+			<div class="text-center">
+				<th:block th:if="${noDataFound} == 'true'">
+					<div class="" style="height: 18vh;"></div>
+					<img src="/img/Nooo.jpg" class="no-data-found-img " alt="" />
+				</th:block>
+			</div>
+			<th:block th:if="${noDataFound} == 'false'">
+				<div class="table-responsive vv">
+					<table class="table table-bordered">
+						<thead class="table-muted">
+							<tr class="">
+								<th>Isbn</th>
+								<th>Author</th>
+								<th>Title</th>
+								<th>Publisher</th>
+								<th>Edition</th>
+								<th>Category</th>
+								<th>Cost</th>
+								<th>Available Quantity</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="book : ${listOfBooks}" class="text-center">
+								<td th:text="${book.isbn}"></td>
+								<td th:text="${book.author}"></td>
+								<td th:text="${book.title}"></td>
+								<td th:text="${book.publisher}"></td>
+								<td th:text="${book.edition}"></td>
+								<td th:text="${book.category}"></td>
+								<td th:text="${book.cost}"></td>
+								<td th:text="${book.quantity}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</th:block>
+		</div>
+	</div>
+	<footer th:replace="~{student/studentBase::footers}"></footer>
+</body>
+
+</html>

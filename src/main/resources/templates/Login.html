@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<span data-th-insert="~{base::links}"></span>
+	<style>
+		.containerr {
+			width: 80%;
+			margin: auto;
+			padding: 20px;
+			height: 100%
+		}
+
+		.login {
+			width: 50%
+		}
+
+		.login {
+			float: left;
+			/* background-color: #fafafa; */
+			height: 100%;
+			border-radius: 10px 0 0 10px;
+			text-align: center;
+			padding-top: 100px;
+		}
+
+		.login h1 {
+			margin-bottom: 40px;
+			font-size: 2.5em;
+		}
+
+		input[type="email"],
+		input[type="password"] {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 30px;
+			border: none;
+			background-color: #eeeeef;
+		}
+
+		input[type="checkbox"] {
+			float: left;
+			margin-right: 5px;
+		}
+
+		.login span {
+			float: left
+		}
+
+		.login a {
+			float: right;
+			text-decoration: none;
+			color: #000;
+			transition: 0.3s all ease-in-out;
+		}
+
+		.login a:hover {
+			color: #9526a9;
+			font-weight: bold
+		}
+
+		.login button {
+			width: 100%;
+			margin: 30px 0;
+			padding: 10px;
+			border: none;
+			background-color: #9526a9;
+			color: #fff;
+			font-size: 20px;
+			cursor: pointer;
+			transition: 0.3s all ease-in-out;
+		}
+
+		.login button:hover {
+			width: 97%;
+			font-size: 22px;
+			border-radius: 5px;
+
+		}
+
+		.navcol,
+		footer {
+			/* background-color: #B204FF; */
+			background-color: #2e7272;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.logo {
+			width: 50px;
+			height: 50px;
+			border-radius: 35px;
+		}
+
+		.view {
+			height: 90.1vh;
+			width: 100%;
+			background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1)), url(/img/back.jpg);
+			background-size: cover;
+		}
+	</style>
+</head>
+
+<body>
+	<nav th:replace="~{base::navs}"></nav>
+	<div class="view">
+		<div class="containerr">
+			<div class="login">
+				<div class="containerr">
+					<h1 class="text-light"> Admin Login</h1>
+					<form action="/signin" method="post">
+						<input type="email" name="username" placeholder="Email">
+						<input type="password" name="password" placeholder="Password"><br>
+						<a href="#" class="text-light">Forgot password?</a>
+						<th:block th:if="${param.error}"><script>
+								swal ( "Error" ,  "Invalid username or password !" ,  "error" )
+							</script></th:block>
+						<button type="submit">Login</button>
+					</form>
+				</div>
+			</div>
+			<div class="login">
+				<div class="containerr">
+					<h1 class="text-light">Student Login</h1>
+					<form action="/signin" method="post">
+						<input type="email" name="username" placeholder="Email">
+						<input type="password" name="password" placeholder="Password"><br>
+						<a href="#" class="text-light">Forgot password?</a>
+						<button type="submit">Login</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:if="${param.logout}"><script>
+		swal("Success", "You have been logged out !", "success");
+	</script></th:block>
+	<footer th:replace="~{base::footers}"></footer>
+</body>
+</html>

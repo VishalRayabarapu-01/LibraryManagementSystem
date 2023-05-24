@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span th:insert="~{admin/adminBase::adminLinks}"></span>
+	<title>Document</title>
+	<style>
+		.navcol,
+		footer {
+			/* background-color: #B204FF; */
+			background-color: #2e7272;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.logo {
+			width: 40px;
+			height: 40px;
+			border-radius: 35px;
+		}
+
+		.sidebar{
+			height: 87.6vh;
+		}
+		.sidebar_items {
+			padding: 13px 15px;
+			/*font-size: large;*/
+		}
+
+		.sidebar_items:hover {
+			padding: 15px 13px;
+			font-weight: bolder;
+			background-color: white; 
+		}
+
+		.features {
+			padding: 15px 7px;
+		}
+
+		.divider {
+			height: 1px;
+			background-color: black;
+		}
+
+		/*========= */
+		.dashboard-icons {
+			height: 100px;
+			width: 90px;
+		}
+
+		.lists-background {
+			border-radius: 20px;
+			background-color: white;
+		}
+
+		li {
+			list-style: square;
+		}
+
+		.show {
+			/* this is dynamic side bar dropdown to see it click on dropdown and then inspect the box. */
+			display: block;
+		}
+		.backgrnd{
+			background: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.6)),url(/img/home.png);
+			background-size: cover;
+		}
+	</style>
+</head>
+
+<body>
+	<nav th:replace="~{admin/adminBase::navs}"></nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2 sidebar p-0" style="background: #F3EFEF;">
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link sidebar_items active text-dark" href="/admin/index"><i
+								class="fa-solid fa-house"></i>&nbsp; Dashboard</a>
+					</li>
+					<li>
+						<span class="fs-4 h1 features">Features :-</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle sidebar_items text-dark" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa-solid fa-book"></i>&nbsp;Manage Books
+						</a>
+						<ul class="dropdown-menu ">
+							<li><a class="dropdown-item" href="/admin/addBook">Add Books</a></li>
+							<li><a class="dropdown-item" href="/admin/viewBooks/0">View Books</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle  sidebar_items text-dark" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa-sharp fa-solid fa-people-roof"></i>&nbsp;Manage Students
+						</a>
+						<ul class="dropdown-menu ">
+							<li><a class="dropdown-item" href="/admin/addstudent">Add Student</a></li>
+							<li><a class="dropdown-item" href="/admin/viewStudents/0">View Students</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/manageFines"><i
+								class="fa-solid fa-sack-dollar"></i>&nbsp;Manage Fines</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/issueBook"><i
+								class="fa-solid fa-hand-holding"></i>&nbsp;Issue Book</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/returnBook"><i
+								class="fa-solid fa-cart-shopping "></i>&nbsp;Return Book</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link  sidebar_items text-dark" href="/admin/viewIssuedBooks/0"><i class="fa-solid fa-list"></i>&nbsp;View
+							Issued Books</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items logout text-dark" href="/logout"><i
+								class="fa-solid fa-right-from-bracket"></i>&nbsp;Logout</a>
+					</li>
+					<li class="nav-item">
+						<div class="divider"></div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-md backgrnd" style="background-color: #e2e2e2;">
+				<!--content here -->
+				<div class="row px-4 mt-2">
+					<div class="col">
+						<span class="fs-3 text-light">Dashboard&nbsp;</span>
+						<small class="text-light fs-4">Control panel</small>
+					</div>
+					<div class="col">
+						<div class="d-flex justify-content-end fs-5 text-muted mt-2">
+							<span class="text-light">
+								<i class="fa-solid fa-gauge-high"></i> Home&nbsp;>&nbsp;
+							</span>
+							<span class="text-light" th:text="${currentPage}"></span>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-1">
+					<div class="col bg-primary m-3">
+						<div class="row text-light">
+							<div class="col">
+								<div class="fs-1 p-1" th:text="${issuedBooks}"></div>
+								<div class="my-1">Issued Books</div>
+							</div>
+							<div class="col">
+								<img src="/img/issueBookLogo.png" class="dashboard-icons" alt="">
+							</div>
+						</div>
+					</div>
+					<div class="col bg-success m-3">
+						<div class="row text-light ">
+							<div class="col">
+								<div class="fs-1 p-1" th:text="${students}"></div>
+								<div class="my-1">Total Students</div>
+							</div>
+							<div class="col">
+								<img src="/img/studentsLogo.jpg" class="dashboard-icons" alt="">
+							</div>
+						</div>
+					</div>
+					<div class="col bg-warning m-3">
+						<div class="row text-light">
+							<div class="col">
+								<div class="fs-1 p-1" th:text="${books}"></div>
+								<div class="">Total Books</div>
+							</div>
+							<div class="col m-2">
+								<img src="/img/totalBooks.png" class="dashboard-icons" alt="">
+							</div>
+						</div>
+					</div>
+					<div class="col bg-danger m-3">
+						<div class="row text-light">
+							<div class="col">
+								<div class="fs-1 p-1" th:text="${fines}"></div>
+								<div class="">Fines Collected</div>
+							</div>
+							<div class="col">
+								<img src="/img/rupeeLogo.jpg" class="dashboard-icons" alt="">
+							</div>
+						</div>
+					</div>
+					<div class="divider mt-1"></div>
+				</div>
+				<div class="row px-4 mt-3">
+					<div class="col mt-2 lists-background">
+						<div class="h3 px-3 mt-2 text-center">Popular Books :-</div>
+						<ul class="mt-4 px-4">
+							<li class="m-2 fs-5">Java</li>
+							<li class="m-2 fs-5">C++</li>
+							<li class="m-2 fs-5">Python</li>
+							<li class="m-2 fs-5">Java Server pages</li>
+							<li class="m-2 fs-5">Artificial Intelligence</li>
+						</ul>
+					</div>
+					<div class="col mt-2 mx-4 lists-background">
+						<div class="h3 px-3 mt-2 text-center">Send Mails :-</div>
+						<div class="mt-2 p-2 fs-5">
+							Send an E-mail for the students who has taken books and has deadline of 1 day.
+							<table class="table mt-2">
+								<thead class="">
+									<tr>
+										<th class="m-2 px-4">Action</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><a href="/admin/sendMails/3456456" class="btn btn-outline-success btn-md px-3 mt-1">Send</a></td>
+										<td class="fs-4 mt-1 px-3"><span th:text="${emailMessage}"></span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{admin/adminBase::footers}"></footer>
+</body>
+</html>

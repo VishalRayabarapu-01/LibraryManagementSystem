@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<span data-th-insert="~{base::links}"></span>
+	<title th:text="${indexName}"></title>
+	<style>
+		.view {
+			height: 88.1vh;
+			width: 100%;
+			background: url(/img/LibHomee.jpg);
+			background-size: cover;
+		}
+
+		body {
+			margin: 0px;
+		}
+
+		.paragraph {
+			/* text-align: center; */
+			width: 27em;
+			padding-left: 60px;
+			margin-top: 5em;
+			font-family: Georgia, 'Times New Roman', Times, serif;
+			font-size:20px;
+		}
+
+		.navcol,
+		.getstartedbtn:hover,
+		footer {
+			/* background-color: #B204FF; */
+			background-color: #2e7272;
+		}
+
+		.buttons {
+			padding-left: 12em;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.logo {
+			width: 50px;
+			height: 50px;
+			border-radius: 35px;
+		}
+	</style>
+</head>
+<body>
+	<nav th:replace="~{base::navs}"></nav>
+	<div class="view">
+		<div class="row">
+			<div class="paragraph">
+				Welcome to our online library, dear students! We are thrilled to have you here and are excited to
+				provide you with access to a vast collection of resources to support your academic journey. Whether you
+				are seeking textbooks, research articles, or simply a quiet space to study, our online library has
+				everything you need to excel in your studies. We encourage you to explore our collection, ask questions,
+				and take advantage of the many resources and services available to you. Thank you for choosing our
+				online library, and we look forward to supporting you in your academic pursuits!
+			</div>
+			<div class="buttons mt-4">
+				<a href="/signin" class="btn btn-lg btn-outline-dark getstartedbtn">Get Started</a>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{base::footers}"></footer>
+</body>
+</html>

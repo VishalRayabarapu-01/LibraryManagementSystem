@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span th:insert="~{admin/adminBase::adminLinks}"></span>
+	<style>
+		.navcol,
+		footer {
+			/* background-color: #B204FF; */
+			background-color: #2e7272;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.logo {
+			width: 40px;
+			height: 40px;
+			border-radius: 35px;
+		}
+
+		.sidebar {
+			height: 87.6vh;
+		}
+
+		.sidebar_items {
+			padding: 13px 15px;
+			/*font-size: large;*/
+		}
+
+		.sidebar_items:hover {
+			padding: 15px 13px;
+			font-weight: bolder;
+			background-color: white;
+		}
+
+		.features {
+			padding: 15px 7px;
+		}
+
+		.divider {
+			height: 1px;
+			background-color: black;
+		}
+
+		/*========= */
+		.labels {
+			font-weight: bolder;
+		}
+
+		.view-image {
+			height: 15em;
+			width: 10em;
+		}
+		.backgrnd{
+			background: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.6)),url(/img/home.png);
+			background-size: cover;
+		}
+	</style>
+</head>
+
+<body>
+	<nav th:replace="~{admin/adminBase::navs}"></nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2 sidebar p-0" style="background: #F3EFEF;">
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link sidebar_items active text-dark" href="/admin/index"><i
+								class="fa-solid fa-house"></i>&nbsp; Dashboard</a>
+					</li>
+					<li>
+						<span class="fs-4 h1 features">Features :-</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle sidebar_items text-dark" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa-solid fa-book"></i>&nbsp;Manage Books
+						</a>
+						<ul class="dropdown-menu ">
+							<li><a class="dropdown-item" href="/admin/addBook">Add Books</a></li>
+							<li><a class="dropdown-item" href="/admin/viewBooks/0">View Books</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle  sidebar_items text-dark" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa-sharp fa-solid fa-people-roof"></i>&nbsp;Manage Students
+						</a>
+						<ul class="dropdown-menu ">
+							<li><a class="dropdown-item" href="/admin/addstudent">Add Student</a></li>
+							<li><a class="dropdown-item" href="/admin/viewStudents/0">View Students</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/manageFines"><i
+								class="fa-solid fa-sack-dollar"></i>&nbsp;Manage Fines</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/issueBook"><i
+								class="fa-solid fa-hand-holding"></i>&nbsp;Issue Book</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/returnBook"><i
+								class="fa-solid fa-cart-shopping "></i>&nbsp;Return Book</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link  sidebar_items text-dark" href="/admin/viewIssuedBooks/0"><i
+								class="fa-solid fa-list"></i>&nbsp;View
+							Issued Books</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items logout text-dark" href="/logout"><i
+								class="fa-solid fa-right-from-bracket"></i>&nbsp;Logout</a>
+					</li>
+					<li class="nav-item">
+						<div class="divider"></div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-md backgrnd" style="background-color: #e2e2e2;">
+				<!--content here -->
+				<div class="row px-4 mt-2">
+					<div class="col">
+						<span class="fs-3 text-light">Dashboard&nbsp;</span>
+						<small class="text-light fs-4">Control panel</small>
+					</div>
+					<div class="col">
+						<div class="d-flex justify-content-end fs-5 text-muted mt-2">
+							<span class="text-light">
+								<i class="fa-solid fa-gauge-high"></i> Home&nbsp;>&nbsp;
+							</span>
+							<span class="text-light" th:text="${currentPage}"></span>
+						</div>
+					</div>
+				</div>
+				<th:block th:if="${message}">
+					<script>
+						var message = '[[${message}]]';
+						swal("Success", message, "success");
+					</script>
+				</th:block>
+				<th:block th:if="${messageError}">
+					<script>
+						var msg = '[[${messageError}]]';
+						swal("Error", msg, "error");
+					</script>
+				</th:block>
+				<th:block th:if="${viewFields}=='true'">
+					<div class="card mt-2">
+						<div class="card-body p-0 m-0">
+							<h4 class="p-2 m-2 mx-2">Viewing Issued Book Details</h4>
+							<div style="height: 4px; background-color: orange;"></div>
+							<div class="row m-4">
+								<div class="col-2">
+									<img th:src="@{'/images/'+${imageurl}}" class="view-image mt-4" alt="" />
+								</div>
+								<div class="col mx-5 px-0">
+									<div class="row m-2 p-2">
+										<div class="col">
+											<div class="form-group mt-1">
+												<label for="" class="labels mt-1">Issue Id </label>
+												<input type="text" name="isbn" th:value="${obj.issueId}" id=""
+													class="form-control" readonly placeholder="">
+											</div>
+											<div class="form-group mt-1">
+												<label for="" class="labels mt-1">Book Id </label>
+												<input type="text" name="author" id="" th:value="${obj.bookId}"
+													class="form-control" readonly placeholder="">
+											</div>
+											<div class="form-group mt-1">
+												<label for="" class="labels mt-1">Title </label>
+												<input type="text" name="title" id="" th:value="${obj.title}"
+													class="form-control " readonly placeholder="">
+											</div>
+											<div class="form-group mt-1">
+												<label for="" class="labels mt-1">Student Id </label>
+												<input type="text" name="publisher" id="" th:value="${obj.studId}"
+													class="form-control" readonly placeholder="">
+											</div>
+										</div>
+										<div class="col">
+											<div class="form-group mt-1">
+												<label for="" class="labels mt-1">Student Name </label>
+												<input type="text" name="edition" readonly th:value="${obj.name}" id=""
+													class="form-control " placeholder="">
+											</div>
+											<div class="form-group mt-1">
+												<label for="" class="labels mt-1">Book Issued Date </label>
+												<input type="text" name="category" th:value="${obj.issueDate}" id=""
+													class="form-control " readonly placeholder="">
+											</div>
+											<div class="form-group mt-1">
+												<label for="" class="labels mt-1">Book Return Date</label>
+												<input type="text" name="cost" id="" th:value="${obj.returnDate}"
+													class="form-control " readonly placeholder="">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</th:block>
+				<th:block th:if="${viewFields}=='false'">
+					<div class="text-center mt-4">
+						<img src="/img/Nooo.jpg" alt="" style="height: 410px; width: 35em;" />
+					</div>
+				</th:block>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{admin/adminBase::footers}"></footer>
+</body>
+
+</html>

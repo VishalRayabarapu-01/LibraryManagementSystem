@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	
+</head>
+<body>
+	<span th:fragment="adminLinks">
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="/contents/bootstrap.min.css">
+		<script src="/contents/bootstrap.bundle.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+			integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+			crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<title th:text="${indexName}"></title>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	</span>
+	<nav class="navbar navbar-expand-sm navcol p-0" th:fragment="navs">
+		<div class="container-fluid ">
+			<div class="navbar-brand mx-2 fs-3  text-light">
+				<a href="/Library/home">
+					<img src="/img/logo.jpg" alt="" class="logo"><span class="text-light">&nbsp;Library Management
+						System</span>
+				</a>
+			</div>
+		</div>
+		<div class="nav-item">
+			<div class="nav-link p-0">
+				<img src="/img/admin.png" alt="" srcset="" class="logo">
+			</div>
+		</div>
+		<div class="nav-item">
+			<div class="nav-link p-0">
+				<span class=" p-2 fs-4 text-light">Welcome&nbsp;,&nbsp;Admin</span>
+			</div>
+		</div>
+	</nav>
+	<footer class="text-center text-light" th:fragment="footers">
+		<div class="">&copy; Copyright 2023 | VISHAL RAYABARAPU</div>
+	</footer>
+	<!-- <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3 sidebar">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Add</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">View</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Update</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Delete</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-9">
+            <!-- Your main content here 
+            heiiiiii
+          </div>
+        </div>
+      </div> -->
+</body>
+</html>

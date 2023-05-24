@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span th:insert="~{admin/adminBase::adminLinks}"></span>
+	<style>
+		.navcol,
+		footer {
+			/* background-color: #B204FF; */
+			background-color: #2e7272;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.logo {
+			width: 40px;
+			height: 40px;
+			border-radius: 35px;
+		}
+
+		.sidebar {
+			height: 87.6vh;
+		}
+
+		.sidebar_items {
+			padding: 13px 15px;
+			/*font-size: large;*/
+		}
+
+		.sidebar_items:hover {
+			padding: 15px 13px;
+			font-weight: bolder;
+			background-color: white;
+		}
+
+		.features {
+			padding: 15px 7px;
+		}
+
+		.divider {
+			height: 1px;
+			background-color: black;
+		}
+
+		/*========= */
+		.labels {
+			font-weight: bolder;
+		}
+
+		.view-image {
+			height: 18em;
+			width: 25em;
+			border-radius: 20px;
+		}
+
+		.backgrnd {
+			background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), url(/img/home.png);
+			background-size: cover;
+		}
+	</style>
+</head>
+
+<body>
+	<nav th:replace="~{admin/adminBase::navs}"></nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2 sidebar p-0" style="background: #F3EFEF;">
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link sidebar_items active text-dark" href="/admin/index"><i
+								class="fa-solid fa-house"></i>&nbsp; Dashboard</a>
+					</li>
+					<li>
+						<span class="fs-4 h1 features">Features :-</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle sidebar_items text-dark" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa-solid fa-book"></i>&nbsp;Manage Books
+						</a>
+						<ul class="dropdown-menu ">
+							<li><a class="dropdown-item" href="/admin/addBook">Add Books</a></li>
+							<li><a class="dropdown-item" href="/admin/viewBooks/0">View Books</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle  sidebar_items text-dark" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa-sharp fa-solid fa-people-roof"></i>&nbsp;Manage Students
+						</a>
+						<ul class="dropdown-menu ">
+							<li><a class="dropdown-item" href="/admin/addstudent">Add Student</a></li>
+							<li><a class="dropdown-item" href="/admin/viewStudents/0">View Students</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/manageFines"><i
+								class="fa-solid fa-sack-dollar"></i>&nbsp;Manage Fines</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/issueBook"><i
+								class="fa-solid fa-hand-holding"></i>&nbsp;Issue Book</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/returnBook"><i
+								class="fa-solid fa-cart-shopping "></i>&nbsp;Return Book</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link  sidebar_items text-dark" href="/admin/viewIssuedBooks/0"><i
+								class="fa-solid fa-list"></i>&nbsp;View
+							Issued Books</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items logout text-dark" href="/logout"><i
+								class="fa-solid fa-right-from-bracket"></i>&nbsp;Logout</a>
+					</li>
+					<li class="nav-item">
+						<div class="divider"></div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-md backgrnd" style="background-color: #e2e2e2;">
+				<!--content here -->
+				<div class="row px-4 mt-2">
+					<div class="col">
+						<span class="fs-3 text-light">Dashboard&nbsp;</span>
+						<small class="text-light fs-4">Control panel</small>
+					</div>
+					<div class="col">
+						<div class="d-flex justify-content-end fs-5 text-muted mt-2">
+							<span class="text-light">
+								<i class="fa-solid fa-gauge-high"></i> Home&nbsp;>&nbsp;
+							</span>
+							<span class="text-light" th:text="${currentPage}"></span>
+						</div>
+					</div>
+				</div>
+				<div class="card mt-2">
+					<div class="card-body p-0 m-0">
+						<h4 class="p-2 m-2 mx-2">Return Book.</h4>
+						<div style="height: 4px; background-color: orange;"></div>
+						<div class="row m-4">
+							<div class="col">
+								<img src="/img/return.jpg" alt="" class="mt-4 mx-2 view-image " />
+							</div>
+							<div class="col px-0">
+								<form action="/admin/returnDetails" method="post">
+									<div class="row m-2 p-2">
+										<div class="text-center fs-4 text-danger mt-3">Enter Valid Credentials</div>
+										<div class="form-group mt-2">
+											<label for="" class="labels  mt-1">Book Id *</label>
+											<input type="text" name="bookId" id="" class="form-control "
+												placeholder="Enter Book id">
+										</div>
+										<div class="form-group mt-3">
+											<label for="" class="labels mt-1">Student Hall Ticket *</label>
+											<input type="text" name="studId" id="" class="form-control"
+												placeholder="Enter Student id">
+										</div>
+										<div class="form-group mt-4 text-center">
+											<button type="submit" class="btn btn-md btn-outline-success text-center"><i
+													class="fa-solid fa-rotate-left fa-spin fa-spin-reverse"></i> Return
+												Book</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:if="${message}">
+		<script>
+			var msg = '[[${message}]]';
+			swal("Success", msg, "success");
+		</script>
+	</th:block>
+	<th:block th:if="${messageError}">
+		<script>
+			var mesg = '[[${messageError}]]';
+			swal("Error", mesg, "error");
+		</script>
+	</th:block>
+	<footer th:replace="~{admin/adminBase::footers}"></footer>
+</body>
+
+</html>

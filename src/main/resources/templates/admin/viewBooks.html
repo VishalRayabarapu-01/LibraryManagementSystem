@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span th:insert="~{admin/adminBase::adminLinks}"></span>
+	<style>
+		.navcol,
+		footer {
+			/* background-color: #B204FF; */
+			background-color: #2e7272;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.logo {
+			width: 40px;
+			height: 40px;
+			border-radius: 35px;
+		}
+
+		.sidebar {
+			height: 87.6vh;
+		}
+
+		.sidebar_items {
+			padding: 13px 15px;
+			/*font-size: large;*/
+		}
+
+		.sidebar_items:hover {
+			padding: 15px 13px;
+			font-weight: bolder;
+			background-color: white;
+		}
+
+		.features {
+			padding: 15px 7px;
+		}
+
+		.divider {
+			height: 1px;
+			background-color: black;
+		}
+
+		/*========= */
+		.labels {
+			font-weight: bolder;
+		}
+
+		/*for loading transisions*/
+		.loading-box {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 200px;
+			overflow: hidden;
+		}
+
+		.no-data-found-img {
+			width: 35em;
+			height: 410px;
+		}
+		.backgrnd{
+			background: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.6)),url(/img/home.png);
+			background-size: cover;
+		}
+	</style>
+</head>
+
+<body>
+	<nav th:replace="~{admin/adminBase::navs}"></nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2 sidebar p-0" style="background: #F3EFEF;">
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link sidebar_items active text-dark" href="/admin/index"><i
+								class="fa-solid fa-house"></i>&nbsp; Dashboard</a>
+					</li>
+					<li>
+						<span class="fs-4 h1 features">Features :-</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle sidebar_items text-dark" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa-solid fa-book"></i>&nbsp;Manage Books
+						</a>
+						<ul class="dropdown-menu ">
+							<li><a class="dropdown-item" href="/admin/addBook">Add Books</a></li>
+							<li><a class="dropdown-item" href="/admin/viewBooks/0">View Books</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle  sidebar_items text-dark" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa-sharp fa-solid fa-people-roof"></i>&nbsp;Manage Students
+						</a>
+						<ul class="dropdown-menu ">
+							<li><a class="dropdown-item" href="/admin/addstudent">Add Student</a></li>
+							<li><a class="dropdown-item" href="/admin/viewStudents/0">View Students</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/manageFines"><i
+								class="fa-solid fa-sack-dollar"></i>&nbsp;Manage Fines</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/issueBook"><i
+								class="fa-solid fa-hand-holding"></i>&nbsp;Issue Book</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/returnBook"><i
+								class="fa-solid fa-cart-shopping "></i>&nbsp;Return Book</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link  sidebar_items text-dark" href="/admin/viewIssuedBooks/0"><i class="fa-solid fa-list"></i>&nbsp;View
+							Issued Books</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items logout text-dark" href="/logout"><i
+								class="fa-solid fa-right-from-bracket"></i>&nbsp;Logout</a>
+					</li>
+					<li class="nav-item">
+						<div class="divider"></div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-md backgrnd" style="background-color: #e2e2e2;">
+				<!--content here -->
+				<div class="row px-4 mt-2">
+					<div class="col">
+						<span class="fs-3 text-light">Dashboard&nbsp;</span>
+						<small class="text-light fs-4">Control panel</small>
+					</div>
+					<div class="col">
+						<div class="d-flex justify-content-end fs-5 text-muted mt-2">
+							<span class="text-light">
+								<i class="fa-solid fa-gauge-high"></i> Home&nbsp;>&nbsp;
+							</span>
+							<span class="text-light" th:text="${currentPage}"></span>
+						</div>
+					</div>
+				</div>
+				<div class="card mt-2">
+					<div class="card-header p-2 m-1">
+						<div class="row">
+							<div class="col-9">
+								<th:block th:if="${noPagination}=='false'">
+									<nav aria-label="Page navigation ">
+										<ul class="pagination m-0">
+											<li class="page-item" th:each="n : ${#numbers.sequence(1,totalPages)}">
+												<a class="page-link" th:href="@{'/admin/viewBooks/'+${n-1}}"
+													th:text="${n}"></a>
+											</li>
+										</ul>
+									</nav>
+								</th:block>
+							</div>
+							<div class="col">
+								<th:block th:if="${noDataFound} == 'false'">
+									<form action="/admin/searchBook/0" method="get">
+										<div class="d-flex justify-content-end  text-danger mt-1">
+											<input class="form-control me-2" type="search" name="bookid"
+												placeholder="Search">
+											<button class="btn btn-sm btn-success" type="submit">Search</button>
+										</div>
+									</form>
+								</th:block>
+							</div>
+
+						</div>
+					</div>
+					<div class="card-body p-0 px-1">
+						<div class="text-center">
+							<th:block th:if="${noDataFound} == 'true'">
+								<img src="/img/Nooo.jpg" class="no-data-found-img " alt="" />
+							</th:block>
+						</div>
+						<th:block th:if="${messageError}">
+							<script>
+								var msg = '[[${messageError}]]';
+								swal("Error", msg, "error");
+							</script>
+						</th:block>
+						<th:block th:if="${messageError}">
+							<script>
+								var msg = '[[${messageError}]]';
+								swal("Success", msg, "success");
+							</script>
+						</th:block>
+						<th:block th:if="${noDataFound} == 'false'">
+							<div class="table-responsive">
+								<table class="table">
+									<thead class="table-muted">
+										<tr class="">
+											<th>Isbn</th>
+											<th>Author</th>
+											<th>Title</th>
+											<th>Publisher</th>
+											<th>Edition</th>
+											<th>Category</th>
+											<th>Cost</th>
+											<th>Quantity</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="book : ${listOfBooks}">
+											<td th:text="${book.isbn}"></td>
+											<td th:text="${book.author}"></td>
+											<td th:text="${book.title}"></td>
+											<td th:text="${book.publisher}"></td>
+											<td th:text="${book.edition}"></td>
+											<td th:text="${book.category}"></td>
+											<td th:text="${book.cost}"></td>
+											<td th:text="${book.quantity}"></td>
+											<td class="pt-1">
+												<a class="btn btn-sm btn-outline-primary"
+													th:href="@{'/admin/searchBook/'+${book.isbn}}">
+													<i class="fa-solid fa-eye"></i> View</a>
+												<a class="btn btn-sm btn-outline-danger"
+													th:href="@{'/admin/deleteBook/'+${book.isbn}}">
+													<i class="fa-solid fa-circle-xmark"></i> Delete</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</th:block>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{admin/adminBase::footers}"></footer>
+</body>
+
+</html>

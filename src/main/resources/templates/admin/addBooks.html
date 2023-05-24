@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span th:insert="~{admin/adminBase::adminLinks}"></span>
+	<style>
+		.navcol,
+		footer {
+			/* background-color: #B204FF; */
+			background-color: #2e7272;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.logo {
+			width: 40px;
+			height: 40px;
+			border-radius: 35px;
+		}
+
+		.sidebar {
+			height: 87.6vh;
+		}
+
+		.sidebar_items {
+			padding: 13px 15px;
+			/*font-size: large;*/
+		}
+
+		.sidebar_items:hover {
+			padding: 15px 13px;
+			font-weight: bolder;
+			background-color: white;
+		}
+
+		.features {
+			padding: 15px 7px;
+		}
+
+		.divider {
+			height: 1px;
+			background-color: black;
+		}
+
+		/*========= */
+		.labels {
+			font-weight: bolder;
+		}
+
+		/*for loading transisions*/
+		.loading-box {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 200px;
+			overflow: hidden;
+		}
+		.backgrnd{
+			background: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.6)),url(/img/home.png);
+			background-size: cover;
+		}
+	</style>
+</head>
+
+<body>
+	<nav th:replace="~{admin/adminBase::navs}"></nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2 sidebar p-0" style="background: #F3EFEF;">
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link sidebar_items active text-dark" href="/admin/index"><i
+								class="fa-solid fa-house"></i>&nbsp; Dashboard</a>
+					</li>
+					<li>
+						<span class="fs-4 h1 features">Features :-</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle sidebar_items text-dark" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa-solid fa-book"></i>&nbsp;Manage Books
+						</a>
+						<ul class="dropdown-menu ">
+							<li><a class="dropdown-item" href="/admin/addBook">Add Books</a></li>
+							<li><a class="dropdown-item" href="/admin/viewBooks/0">View Books</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle  sidebar_items text-dark" href="#" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa-sharp fa-solid fa-people-roof"></i>&nbsp;Manage Students
+						</a>
+						<ul class="dropdown-menu ">
+							<li><a class="dropdown-item" href="/admin/addstudent">Add Student</a></li>
+							<li><a class="dropdown-item" href="/admin/viewStudents/0">View Students</a></li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/manageFines"><i
+								class="fa-solid fa-sack-dollar"></i>&nbsp;Manage Fines</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/issueBook"><i
+								class="fa-solid fa-hand-holding"></i>&nbsp;Issue Book</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items text-dark" href="/admin/returnBook"><i
+								class="fa-solid fa-cart-shopping "></i>&nbsp;Return Book</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link  sidebar_items text-dark" href="/admin/viewIssuedBooks/0"><i class="fa-solid fa-list"></i>&nbsp;View
+							Issued Books</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link sidebar_items logout text-dark" href="/logout"><i
+								class="fa-solid fa-right-from-bracket"></i>&nbsp;Logout</a>
+					</li>
+					<li class="nav-item">
+						<div class="divider"></div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-md backgrnd" style="background-color: #e2e2e2;">
+				<!--content here -->
+				<div class="row px-4 mt-2">
+					<div class="col">
+						<span class="fs-3 text-light">Dashboard&nbsp;</span>
+						<small class="text-light fs-4">Control panel</small>
+					</div>
+					<div class="col">
+						<div class="d-flex justify-content-end fs-5 text-muted mt-2">
+							<span class="text-light">
+								<i class="fa-solid fa-gauge-high"></i> Home&nbsp;>&nbsp;
+							</span>
+							<span class="text-light" th:text="${currentPage}"></span>
+						</div>
+					</div>
+				</div>
+				<div class="card mt-2">
+					<div class="card-header">
+						<div class="row">
+							<div class="col">
+								<a class="btn btn-sm btn-outline-dark mt-1" href="/admin/addBook"><i
+										class="fa-solid fa-circle-plus"></i>&nbsp;Add New Book</a>
+							</div>
+							<div class="col">
+								<div class="d-flex justify-content-end fs-5 text-danger mt-1">
+									<span>( * ) indicates required fields.</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<th:block th:if="${submitOk}=='true'">
+							<script>
+								swal("Success", "Book added to library !", "success");
+							</script>
+						</th:block>
+						<th:block th:if="${message}">
+							<script>
+								var msg='[[${message}]]';
+								swal("Error",msg, "error");
+							</script>
+						</th:block>
+						<form action="/admin/addBookDetails" method="post" th:object="${obj}"
+							enctype="multipart/form-data">
+							<div class="row">
+								<div class="col">
+									<div class="form-group mt-1">
+										<label for="" class="labels mt-1">Isbn *</label>
+										<input type="text" name="isbn" th:value="${obj.isbn}" id=""
+											class="form-control" placeholder="Enter book isbn number">
+									</div>
+									<div class="form-group mt-1">
+										<label for="" class="labels mt-1">Author *</label>
+										<input type="text" name="author" id="" th:value="${obj.author}"
+											class="form-control" placeholder="Name of the author">
+									</div>
+									<div class="form-group mt-1">
+										<label for="" class="labels mt-1">Title *</label>
+										<input type="text" name="title" id="" th:value="${obj.title}"
+											class="form-control " placeholder="Title of book">
+									</div>
+									<div class="form-group mt-1">
+										<label for="" class="labels mt-1">Publisher *</label>
+										<input type="text" name="publisher" id="" th:value="${obj.publisher}"
+											class="form-control" placeholder="Name of publisher">
+									</div>
+									<div class="form-group mt-1">
+										<label for="" class="labels m-1">Image of the book *</label><br />
+										<input type="file" name="file" id="" />
+										<div class="text-danger mt-1">*File should be an image and less than 3 MB.</div>
+									</div>
+								</div>
+								<div class="col">
+									<div class="form-group mt-1">
+										<label for="" class="labels mt-1">Edition *</label>
+										<input type="text" name="edition" th:value="${obj.edition}" id=""
+											class="form-control " placeholder="Enter edition">
+									</div>
+									<div class="form-group mt-1">
+										<label for="" class="labels mt-1">Category *</label>
+										<input type="text" name="category" th:value="${obj.category}" id=""
+											class="form-control " placeholder="Category belongs to ?">
+									</div>
+									<div class="form-group mt-1">
+										<label for="" class="labels mt-1">Cost *</label>
+										<input type="text" name="cost" id="" th:value="${obj.cost}"
+											class="form-control " placeholder="Enter Cost">
+									</div>
+									<div class="form-group mt-1">
+										<label for="" class="labels mt-1">Quantity *</label>
+										<input type="text" name="quantity" th:value="${obj.quantity}" id=""
+											class="form-control" placeholder="Enter book quantity">
+									</div>
+									<div class="form-group mt-1">
+
+									</div>
+								</div>
+								<div class="form-group mt-1 text-center">
+									<button type="submit" class="btn btn-md btn-outline-success text-center"><i
+											class="fa-sharp fa-solid fa-circle-check"></i> Add Book</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{admin/adminBase::footers}"></footer>
+</body>
+
+</html>

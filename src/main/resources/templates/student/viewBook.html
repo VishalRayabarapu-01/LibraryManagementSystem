@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span th:insert="~{/admin/adminBase::adminLinks}"></span>
+	<style>
+		.navcol,
+		footer {
+			/* background-color: #B204FF; */
+			background-color: #2e7272;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.view-image {
+			height: 15em;
+			width: 10em;
+		}
+
+		.vv {
+			height: 86.6vh;
+		}
+
+		.logo {
+			width: 40px;
+			height: 40px;
+			border-radius: 35px;
+		}
+
+		@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
+
+		body {
+			color: #272727;
+			font-family: 'Quicksand', serif;
+			font-style: normal;
+			font-weight: 400;
+			letter-spacing: 0;
+
+		}
+	</style>
+</head>
+
+<body>
+	<nav th:replace="~{student/studentBase::navs}"></nav>
+	<div class="d-flex justify-content-end fs-5 mt-2 mx-3">
+		<a href="/student/viewBooks/0" class="btn button  btn-outline-success">Back</a>
+	</div>
+	<div class="card mt-2 card-backgrnd vv">
+		<div class="card-body p-0 m-0">
+			<h4 class="p-2 m-2 mx-2 ">Viewing Book</h4>
+			<div style="height: 4px; background-color: orange;"></div>
+			<div class="row m-4">
+				<div class="col-2">
+					<img th:src="@{'/images/'+${imgurl}}" class="view-image mt-4" alt="" />
+				</div>
+				<div class="col mx-5 px-0">
+					<div class="row m-2 p-2">
+						<div class="col">
+							<div class="form-group mt-1">
+								<label for="" class="labels mt-1">Isbn </label>
+								<input type="text" name="isbn" th:value="${obj.isbn}" id="" class="form-control"
+									readonly placeholder="Enter book isbn number">
+							</div>
+							<div class="form-group mt-1">
+								<label for="" class="labels mt-1 ">Author </label>
+								<input type="text" name="author" id="" th:value="${obj.author}" class="form-control"
+									readonly placeholder="Name of the author">
+							</div>
+							<div class="form-group mt-1">
+								<label for="" class="labels mt-1 ">Title </label>
+								<input type="text" name="title" id="" th:value="${obj.title}" class="form-control "
+									readonly placeholder="Title of book">
+							</div>
+							<div class="form-group mt-1">
+								<label for="" class="labels mt-1 ">Publisher </label>
+								<input type="text" name="publisher" id="" th:value="${obj.publisher}"
+									class="form-control" readonly placeholder="Name of publisher">
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-group mt-1">
+								<label for="" class="labels mt-1 ">Edition </label>
+								<input type="text" name="edition" readonly th:value="${obj.edition}" id=""
+									class="form-control " placeholder="Enter edition">
+							</div>
+							<div class="form-group mt-1">
+								<label for="" class="labels mt-1 ">Category </label>
+								<input type="text" name="category" th:value="${obj.category}" id=""
+									class="form-control " readonly placeholder="Category belongs to ?">
+							</div>
+							<div class="form-group mt-1">
+								<label for="" class="labels mt-1 ">Cost </label>
+								<input type="text" name="cost" id="" th:value="${obj.cost}" class="form-control "
+									readonly placeholder="Enter Cost">
+							</div>
+							<div class="form-group mt-1">
+								<label for="" class="labels mt-1 ">Available Quantity </label>
+								<input type="text" name="quantity" th:value="${obj.quantity}" id="" class="form-control"
+									readonly placeholder="Enter book quantity">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{student/studentBase::footers}"></footer>
+</body>
+
+</html>
